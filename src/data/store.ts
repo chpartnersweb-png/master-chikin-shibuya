@@ -20,8 +20,8 @@ export const store = {
 
 export const copy = {
   ja: {
-    title: 'HALAL MASTER CHICKEN SHIBUYA｜ハラルマスターチキン渋谷店',
-    description: '渋谷駅から徒歩約7分。ハラール認証を受けたチキン専門店、HALAL MASTER CHICKEN SHIBUYA。サクサクのチキンバーガーやツイスター、ヤンニョムチキンを、店内でもテイクアウトでも。',
+    title: 'ハラルマスターチキン渋谷店｜ハラールチキン・バーガー',
+    description: '渋谷・宇田川町のハラール認証チキン専門店、HALAL MASTER CHICKEN SHIBUYA。チキンバーガー、ツイスター、ヤンニョムチキンを店内・テイクアウトで。渋谷駅から徒歩約7分、J+RサイドJビル地下1階。営業時間11:00〜22:30。',
     skip: '本文へスキップ', navLabel: 'メインメニュー',
     menu: 'メニュー', halal: 'ハラールについて', access: 'アクセス',
     viewMenu: 'メニューを見る', directions: 'Googleマップで開く', shortDirections: 'Googleマップ',
@@ -51,8 +51,8 @@ export const copy = {
     instagramTitle: '最新情報は、Instagramで。', backTop: 'ページの先頭へ',
   },
   en: {
-    title: 'HALAL MASTER CHICKEN SHIBUYA | Halal Chicken Burgers in Tokyo',
-    description: 'Halal-certified chicken in the heart of Shibuya, Tokyo. Enjoy crispy chicken burgers, wraps and yangnyeom chicken. Dine in or take away, approximately 7 minutes on foot from Shibuya Station.',
+    title: 'HALAL MASTER CHICKEN SHIBUYA | Halal Burgers in Tokyo',
+    description: 'Halal-certified chicken burgers, wraps and yangnyeom chicken in Shibuya, Tokyo. Dine in or take away. Approx. 7 min from Shibuya Station, B1F, Udagawacho. Open 11:00–22:30.',
     skip: 'Skip to content', navLabel: 'Main navigation',
     menu: 'Menu', halal: 'About halal', access: 'Find us',
     viewMenu: 'Explore the menu', directions: 'Open Google Maps', shortDirections: 'Directions',

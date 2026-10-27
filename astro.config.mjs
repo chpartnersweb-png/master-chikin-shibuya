@@ -1,11 +1,12 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import { siteUrl } from './src/data/site.mjs';
 
 // https://astro.build/config
-const siteUrl = process.env.PUBLIC_SITE_URL;
 export default defineConfig({
-  ...(siteUrl ? { site: siteUrl } : {}),
+  site: siteUrl,
   output: 'static',
+  trailingSlash: 'always',
   i18n: {
     locales: ['ja', 'en'], defaultLocale: 'ja',
     routing: { prefixDefaultLocale: false },

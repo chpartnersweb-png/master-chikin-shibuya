@@ -1,0 +1,39 @@
+---
+import { getImage } from 'astro:assets';
+import ogSource from '../assets/generated/hero-chicken-desktop.png';
+import { copy, store, type Locale } from '../data/store';
+import { absoluteUrl, robotsPolicy, siteUrl } from '../data/site.mjs';
+import { createSeo } from '../data/seo';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+// A dedicated 1200 x 630 JPEG makes sharing independent of the hero's aspect ratio.
+const ogImage = await getImage({ src: ogSource, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 85 });
+const seo = createSeo(locale, { url: absoluteUrl(ogImage.src), width: 1200, height: 630 });
+const jsonLd = JSON.stringify(seo.schema).replace(/</g, '\\u003c');
+---
+<title>{seo.title}</title>
+<meta name="description" content={seo.description} />
+<meta name="robots" content={robotsPolicy} />
+<link rel="canonical" href={seo.canonical} />
+{seo.alternates.map((alternate) => <link rel="alternate" hreflang={alternate.language} href={alternate.url} />)}
+<link rel="alternate" hreflang="x-default" href={siteUrl} />
+<link rel="sitemap" type="application/xml" href={absoluteUrl('/sitemap.xml')} />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={store.name} />
+<meta property="og:title" content={seo.title} />
+<meta property="og:description" content={seo.description} />
+<meta property="og:url" content={seo.canonical} />
+<meta property="og:locale" content={seo.ogLocale} />
+<meta property="og:locale:alternate" content={seo.alternateOgLocale} />
+<meta property="og:image" content={seo.image.url} />
+<meta property="og:image:secure_url" content={seo.image.url} />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content={String(seo.image.width)} />
+<meta property="og:image:height" content={String(seo.image.height)} />
+<meta property="og:image:alt" content={copy[locale].heroAlt} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={seo.title} />
+<meta name="twitter:description" content={seo.description} />
+<meta name="twitter:image" content={seo.image.url} />
+<meta name="twitter:image:alt" content={copy[locale].heroAlt} />
+<script type="application/ld+json" set:html={jsonLd} />
