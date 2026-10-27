@@ -2,4 +2,12 @@
 import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
-export default defineConfig({});
+const siteUrl = process.env.PUBLIC_SITE_URL;
+export default defineConfig({
+  ...(siteUrl ? { site: siteUrl } : {}),
+  output: 'static',
+  i18n: {
+    locales: ['ja', 'en'], defaultLocale: 'ja',
+    routing: { prefixDefaultLocale: false },
+  },
+});

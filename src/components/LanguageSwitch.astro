@@ -1,0 +1,10 @@
+---
+import { copy, type Locale } from '../data/store';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+---
+<div class="language-switch" role="group" aria-label={copy[locale].language}>
+  {locale === 'ja' ? <span lang="ja" aria-current="page">日本語</span> : <a href="/" lang="ja" hreflang="ja" data-language-base="/">日本語</a>}
+  <span class="language-switch__divider" aria-hidden="true">/</span>
+  {locale === 'en' ? <span lang="en" aria-current="page">EN</span> : <a href="/en/" lang="en" hreflang="en" aria-label="English" data-language-base="/en/">EN</a>}
+</div>

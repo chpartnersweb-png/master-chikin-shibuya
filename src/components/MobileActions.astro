@@ -1,0 +1,11 @@
+---
+import { copy, store, type Locale } from '../data/store';
+import Icon from './Icon.astro';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = copy[locale];
+---
+<nav class="mobile-actions" aria-label={locale === 'ja' ? 'メニューと来店案内' : 'Menu and directions'}>
+  <a href="#menu"><span class="mobile-actions__label">{t.menu}</span><Icon name="down" /></a>
+  <a href={store.maps} target="_blank" rel="noopener noreferrer"><Icon name="pin" /><span class="mobile-actions__label">{t.shortDirections}</span><Icon name="arrow-up" /><span class="sr-only">{t.newTab}</span></a>
+</nav>

@@ -1,0 +1,38 @@
+---
+import { getImage } from 'astro:assets';
+import desktop from '../assets/generated/hero-chicken-desktop.png';
+import mobile from '../assets/generated/hero-chicken-mobile.png';
+import { copy, store, type Locale } from '../data/store';
+import Icon from './Icon.astro';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = copy[locale];
+const [desktopImages, mobileImages] = await Promise.all([
+  Promise.all([900, 1280, 1672].map((width) => getImage({ src: desktop, width, format: 'webp', quality: 85 }))),
+  Promise.all([640, 960, 1122].map((width) => getImage({ src: mobile, width, format: 'webp', quality: 85 }))),
+]);
+const desktopSrcset = desktopImages.map((img) => `${img.src} ${img.attributes.width}w`).join(', ');
+const mobileSrcset = mobileImages.map((img) => `${img.src} ${img.attributes.width}w`).join(', ');
+---
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero__art" data-hero-art>
+    <picture>
+      <source media="(max-width: 767px)" type="image/webp" srcset={mobileSrcset} sizes="100vw" width={mobile.width} height={mobile.height} />
+      <img src={desktopImages[1].src} srcset={desktopSrcset} sizes="100vw" width={desktop.width} height={desktop.height} alt={t.heroAlt} loading="eager" fetchpriority="high" decoding="async" />
+    </picture>
+  </div>
+  <div class="hero__copy">
+    <h1 id="hero-heading" lang="en" data-intro><span>CRISPY.</span> <span>JUICY.</span></h1>
+    <p data-intro>{t.heroSubtitle}</p>
+  </div>
+  <div class="hero__actions" data-intro>
+    <a class="button button--dark" href="#menu">{t.viewMenu}<Icon name="down" /></a>
+    <a class="button button--outline" href={store.maps} target="_blank" rel="noopener noreferrer">{t.shortDirections}<Icon name="arrow-up" /><span class="sr-only">{t.newTab}</span></a>
+  </div>
+  <span class="hero__location" lang="en">SHIBUYA, TOKYO <span aria-hidden="true">↙</span></span>
+</section>
+<div class="location-strip" aria-label={t.station}>
+  <span class="location-strip__place"><Icon name="pin" /><span lang="en">SHIBUYA / B1F</span></span>
+  <span class="location-strip__message">{locale === 'ja' ? '渋谷駅から徒歩約7分。テイクアウトもどうぞ。' : '7 MIN FROM SHIBUYA STATION. TAKEAWAY AVAILABLE.'}</span>
+  <a href="#access" aria-label={t.access}><Icon name="arrow" /></a>
+</div>

@@ -1,0 +1,19 @@
+---
+import type { Locale } from '../data/store';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import SiteHeader from './SiteHeader.astro';
+import Hero from './Hero.astro';
+import MenuSpread from './MenuSpread.astro';
+import HalalGuide from './HalalGuide.astro';
+import Access from './Access.astro';
+import SiteFooter from './SiteFooter.astro';
+import MobileActions from './MobileActions.astro';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+---
+<SiteLayout locale={locale}>
+  <SiteHeader locale={locale} />
+  <main id="main" tabindex="-1"><Hero locale={locale} /><MenuSpread locale={locale} /><HalalGuide locale={locale} /><Access locale={locale} /></main>
+  <SiteFooter locale={locale} />
+  <MobileActions locale={locale} />
+</SiteLayout>

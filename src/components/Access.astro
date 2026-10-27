@@ -1,0 +1,27 @@
+---
+import { copy, store, type Locale } from '../data/store';
+import Icon from './Icon.astro';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = copy[locale];
+---
+<section class="access-section section-pad" id="access" aria-labelledby="access-heading" tabindex="-1" data-section>
+  <div class="section-topline"><span class="eyebrow">03 / FIND US</span><span class="eyebrow" lang="en">UDAGAWACHO, SHIBUYA</span></div>
+  <div class="access-intro" data-reveal><h2 class="display-heading" id="access-heading" lang="en">SEE YOU IN<br />SHIBUYA<span class="heading-period">.</span></h2><p class="pre-line">{t.accessIntro}</p></div>
+  <div class="access-grid">
+    <div class="access-location" data-reveal>
+      <div class="access-floor"><span lang="en">B1F</span><Icon name="down" /></div>
+      <p class="access-floor__caption">{t.floor}</p>
+      <address>{store.address[locale].map((line) => <span>{line}</span>)}</address>
+      <p class="access-station">{t.station}</p>
+      <a class="button button--dark access-map" href={store.maps} target="_blank" rel="noopener noreferrer"><Icon name="pin" />{t.directions}<Icon name="arrow-up" /><span class="sr-only">{t.newTab}</span></a>
+    </div>
+    <dl class="store-details" data-reveal>
+      <div class="store-details__hours"><dt>{t.hours}</dt><dd><span class="hours-number">{store.hours.opens}<span aria-hidden="true">—</span>{store.hours.closes}</span><small>{t.hoursDetail}</small></dd></div>
+      <div><dt>{t.holidays}</dt><dd>{t.holidaysValue}</dd></div>
+      <div><dt>{t.seating}</dt><dd>{t.seatingValue}</dd></div>
+      <div><dt>{t.payment}</dt><dd>{t.paymentDetail}<span class="payment-brands" lang="en">{store.payments.join(' / ')}</span></dd></div>
+      <div><dt>{t.parking}</dt><dd>{t.parkingValue}</dd></div>
+    </dl>
+  </div>
+</section>

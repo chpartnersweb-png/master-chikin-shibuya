@@ -1,0 +1,37 @@
+---
+import { copy, store, type Locale } from '../data/store';
+import Icon from './Icon.astro';
+import Wordmark from './Wordmark.astro';
+import LanguageSwitch from './LanguageSwitch.astro';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = copy[locale];
+const links = [
+  { href: '#menu', text: 'MENU', sub: t.menu },
+  { href: '#halal', text: 'OUR CHICKEN', sub: t.halal },
+  { href: '#access', text: 'FIND US', sub: t.access },
+];
+---
+<a class="skip-link" href="#main">{t.skip}</a>
+<header class="site-header" data-header>
+  <div class="site-header__inner">
+    <a class="site-header__brand" href="#top" aria-label={`${store.name} — ${t.backTop}`}><Wordmark /></a>
+    <nav class="desktop-nav" aria-label={t.navLabel}>
+      {links.map((link) => <a class="nav-link" href={link.href}><span lang="en">{link.text}</span></a>)}
+      <a class="nav-instagram" href={store.instagram} target="_blank" rel="noopener noreferrer" aria-label={`Instagram${t.newTab}`}><Icon name="instagram" /></a>
+    </nav>
+    <div class="site-header__controls">
+      <LanguageSwitch locale={locale} />
+      <button class="menu-toggle" type="button" aria-label={t.openMenu} aria-controls="mobile-navigation" aria-expanded="false" data-menu-open hidden><Icon name="menu" /></button>
+    </div>
+  </div>
+</header>
+<dialog id="mobile-navigation" class="nav-dialog" aria-label={t.navLabel} data-menu-dialog>
+  <div class="nav-dialog__top"><Wordmark /><button class="icon-button" type="button" aria-label={t.closeMenu} data-menu-close><Icon name="close" /></button></div>
+  <nav class="nav-dialog__links" aria-label={t.navLabel}>
+    {links.map((link, index) => <a href={link.href}><span class="nav-dialog__index">0{index + 1}</span><span><strong lang="en">{link.text}</strong>{locale === 'ja' && <small>{link.sub}</small>}</span><Icon name="arrow-up" /></a>)}
+    <a class="nav-dialog__instagram" href={store.instagram} target="_blank" rel="noopener noreferrer"><Icon name="instagram" /><span>Instagram<span class="sr-only">{t.newTab}</span></span><Icon name="arrow-up" /></a>
+  </nav>
+  <div class="nav-dialog__bottom"><LanguageSwitch locale={locale} /><span>HALAL CHICKEN. SHIBUYA.</span></div>
+</dialog>
+<noscript><nav class="noscript-nav" aria-label={t.navLabel}>{links.map((link) => <a href={link.href}>{link.sub}</a>)}</nav></noscript>

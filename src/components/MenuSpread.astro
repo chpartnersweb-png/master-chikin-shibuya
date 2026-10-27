@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+import { copy, type Locale } from '../data/store';
+import { menu } from '../data/menu';
+import MenuProduct from './MenuProduct.astro';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = copy[locale];
+const set = menu[2];
+---
+<section class="menu-section section-pad" id="menu" aria-labelledby="menu-heading" tabindex="-1" data-section>
+  <div class="section-topline"><span class="eyebrow">01 / THE MENU</span><span class="eyebrow" lang="en">FIND YOUR FAVOURITE.</span></div>
+  <div class="menu-intro">
+    <h2 class="display-heading" id="menu-heading" lang="en" data-reveal>MEET YOUR<br /><span class="text-outline">CHICKEN.</span></h2>
+    <div class="menu-intro__copy" data-reveal><p class="lead pre-line">{t.menuIntro}</p><p>{t.menuBody}</p></div>
+  </div>
+  <div class="menu-subheading"><span>{t.burgers}</span><span lang="en">THE BURGERS</span></div>
+  <div class="burger-spread">{menu.slice(0, 2).map((item) => <MenuProduct item={item} locale={locale} />)}</div>
+  <article class="set-spread" aria-labelledby="set-heading" data-reveal>
+    <div class="set-spread__copy">
+      <span class="eyebrow">03 / BURGER + FRIES + DRINK</span>
+      <h3 class="set-heading" id="set-heading" lang="en">MAKE IT<br /><span>A SET.</span></h3>
+      <p class="set-spread__kicker">{t.setKicker}</p>
+    </div>
+    <div class="set-spread__product">
+      <div class="set-spread__image"><Image src={set.image} alt={set.alt[locale]} width={550} height={440} widths={[320, 440, 550]} sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1200px) 48vw, 550px" format="webp" quality={85} loading="lazy" decoding="async" /></div>
+      <p class="set-spread__name">{set.name[locale]}</p>
+      <p class="set-spread__description">{set.description[locale]}</p>
+      {set.price !== null && <p class="product-price">¥{set.price.toLocaleString('ja-JP')}</p>}
+    </div>
+  </article>
+  <div class="menu-subheading menu-subheading--sides"><span>{t.sidesKicker}</span><span lang="en">WRAP & CHICKEN</span></div>
+  <div class="side-spread">{menu.slice(3).map((item) => <MenuProduct item={item} locale={locale} variant="side" />)}</div>
+  <p class="menu-note">{t.priceNote}</p>
+</section>

@@ -1,0 +1,17 @@
+---
+import { copy, store, type Locale } from '../data/store';
+import Icon from './Icon.astro';
+import LanguageSwitch from './LanguageSwitch.astro';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = copy[locale];
+---
+<footer class="site-footer section-pad">
+  <a class="instagram-link" href={store.instagram} target="_blank" rel="noopener noreferrer">
+    <span class="instagram-link__icon"><Icon name="instagram" /></span>
+    <span class="instagram-link__copy"><strong>{t.instagramTitle}</strong><span>@halal_master_chicken_shibuya</span></span>
+    <Icon name="arrow-up" /><span class="sr-only">{t.newTab}</span>
+  </a>
+  <a class="footer-wordmark" href="#top" aria-label={`${store.name} — ${t.backTop}`}><span lang="en">HALAL MASTER</span><span lang="en">CHICKEN SHIBUYA<span class="footer-wordmark__dot">.</span></span></a>
+  <div class="footer-bottom"><p>© {new Date().getFullYear()} {store.name}</p><div class="footer-bottom__links"><a href={store.maps} target="_blank" rel="noopener noreferrer">Google Maps<Icon name="arrow-up" /><span class="sr-only">{t.newTab}</span></a><LanguageSwitch locale={locale} /><a class="back-top" href="#top" aria-label={t.backTop}><Icon name="down" /></a></div></div>
+</footer>

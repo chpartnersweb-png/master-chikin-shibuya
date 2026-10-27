@@ -1,0 +1,26 @@
+---
+import { copy, type Locale } from '../data/store';
+import Icon from './Icon.astro';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = copy[locale];
+---
+<section class="halal-section" id="halal" aria-labelledby="halal-heading" tabindex="-1" data-section>
+  <div class="halal-ribbon" aria-hidden="true"><span>HALAL CHICKEN</span><span class="ribbon-dot">✳</span><span>SHIBUYA, TOKYO</span><span class="ribbon-dot">✳</span><span>DINE IN & TAKE AWAY</span></div>
+  <div class="section-pad halal-section__inner">
+    <div class="section-topline"><span class="eyebrow">02 / OUR CHICKEN</span><span class="eyebrow" lang="en">EVERYONE'S WELCOME.</span></div>
+    <div class="halal-story">
+      <h2 class="display-heading" id="halal-heading" lang="en" data-reveal>HALAL,<br />HERE IN<br /><span class="halal-story__city">SHIBUYA.</span></h2>
+      <div class="halal-story__copy" data-reveal>
+        <span class="eyebrow halal-story__label" lang="en">HALAL-CERTIFIED CHICKEN</span>
+        <p class="lead pre-line">{t.halalTitle}</p>
+        <p>{t.halalBody}</p>
+        <a class="text-link" href="#access">{t.access}<Icon name="arrow" /></a>
+      </div>
+    </div>
+    <div class="service-lines">
+      <div class="service-line" data-reveal><span class="service-line__english" lang="en">DINE IN<span aria-hidden="true">↙</span></span><div><h3>{t.dineTitle}</h3><p>{t.dineBody}</p></div></div>
+      <div class="service-line" data-reveal><span class="service-line__english" lang="en">TAKE AWAY<span aria-hidden="true">↗</span></span><div><h3>{t.takeawayTitle}</h3><p>{t.takeawayBody}</p></div></div>
+    </div>
+  </div>
+</section>

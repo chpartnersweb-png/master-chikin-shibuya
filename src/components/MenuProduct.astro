@@ -1,0 +1,19 @@
+---
+import { Image } from 'astro:assets';
+import type { MenuItem } from '../data/menu';
+import type { Locale } from '../data/store';
+interface Props { item: MenuItem; locale: Locale; variant?: 'burger' | 'side' }
+const { item, locale, variant = 'burger' } = Astro.props;
+---
+<article class:list={['menu-product', `menu-product--${variant}`, `menu-product--${item.id}`]} aria-labelledby={`product-${item.id}`} data-reveal>
+  <div class="menu-product__top"><span class="eyebrow">{item.number} / {variant === 'burger' ? 'BURGER' : item.id === 'twister' ? 'WRAP' : 'CHICKEN'}</span><span class="product-plus" aria-hidden="true">+</span></div>
+  <div class="menu-product__visual"><Image src={item.image} alt={item.alt[locale]} width={550} height={440} widths={[320, 440, 550]} sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1200px) 44vw, 550px" format="webp" quality={85} loading="lazy" decoding="async" /></div>
+  <div class="menu-product__text">
+    <h3 class="product-title" id={`product-${item.id}`}>
+      <span class="product-title__english" lang="en">{item.englishLines.map((line) => <span>{line}</span>)}</span>
+      {locale === 'ja' && <span class="product-title__japanese">{item.name.ja}</span>}
+    </h3>
+    <p>{item.description[locale]}</p>
+    {item.price !== null && <p class="product-price">¥{item.price.toLocaleString('ja-JP')}</p>}
+  </div>
+</article>

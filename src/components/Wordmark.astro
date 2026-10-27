@@ -1,0 +1,9 @@
+---
+interface Props { class?: string }
+const { class: className } = Astro.props;
+---
+<span class:list={['wordmark', className]} aria-label="HALAL MASTER CHICKEN SHIBUYA">
+  <span class="wordmark__top" aria-hidden="true">HALAL MASTER</span>
+  <span class="wordmark__main" aria-hidden="true">CHICKEN<span class="wordmark__dot">.</span></span>
+  <span class="wordmark__place" aria-hidden="true">SHIBUYA, TOKYO</span>
+</span>
