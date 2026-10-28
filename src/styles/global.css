@@ -26,9 +26,13 @@
     --section-space: clamp(72px, 8vw, 128px);
     --header-height: 88px;
     --mobile-height: 64px;
+    --viewport-height: 100vh;
+    --hero-action-height: 0px;
     color-scheme: light;
     font-synthesis: none;
   }
+  @supports (height: 100svh) { :root { --viewport-height: 100svh; } }
+  @supports (height: 100dvh) { :root { --viewport-height: 100dvh; } }
   html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-height) + 20px); }
   html.lenis { scroll-behavior: auto; }
   html.nav-open { overflow: hidden; }
@@ -97,14 +101,14 @@
   .noscript-nav { position: fixed; z-index: 81; top: var(--header-height); background: #fff; padding: 8px 20px; border-block: 1px solid var(--line); width: 100%; display: flex; justify-content: center; gap: 24px; font-size: 12px; }
 
   /* One central food poster. The photograph is never used as a side column. */
-  .hero { position: relative; isolation: isolate; background: var(--hero-yellow); aspect-ratio: 1672 / 941; min-height: max(640px, calc(100svh - var(--header-height))); overflow: hidden; }
-  .hero__art { position: absolute; inset: 0 0 40px; z-index: -1; transform-origin: 50% 60%; }
+  .hero { position: relative; isolation: isolate; background: var(--hero-yellow); height: calc(var(--viewport-height) - var(--header-height) - var(--hero-action-height)); min-height: 0; aspect-ratio: auto; container-type: size; overflow: hidden; }
+  .hero__art { position: absolute; inset: 0 0 clamp(28px, 6cqh, 48px); z-index: -1; transform-origin: 50% 60%; }
   .hero__art picture { display: block; width: 100%; height: 100%; }
   .hero__art img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
-  .hero__copy { position: relative; padding: 20px 24px 0; text-align: center; }
-  .hero h1 { font: 800 clamp(86px, 7.2vw, 132px)/.82 var(--font-display); letter-spacing: -.02em; }
-  .hero__copy p { font-size: 14px; font-weight: 700; letter-spacing: .1em; margin-top: 14px; }
-  .hero__actions { position: absolute; bottom: 38px; left: 50%; transform: translateX(-50%); display: flex; align-items: stretch; justify-content: center; gap: 12px; width: max-content; max-width: calc(100% - 48px); }
+  .hero__copy { position: relative; padding: clamp(12px, 3cqh, 28px) 24px 0; text-align: center; }
+  .hero h1 { font: 800 clamp(48px, min(7.2vw, 10cqh), 132px)/.82 var(--font-display); letter-spacing: -.02em; }
+  .hero__copy p { font-size: clamp(11px, 1.8cqh, 14px); font-weight: 700; line-height: 1.5; letter-spacing: .1em; margin-top: clamp(6px, 1.5cqh, 14px); }
+  .hero__actions { position: absolute; bottom: clamp(24px, 5cqh, 38px); left: 50%; transform: translateX(-50%); display: flex; align-items: stretch; justify-content: center; gap: 12px; width: max-content; max-width: calc(100% - 48px); }
   .hero__actions .button { min-width: 210px; }
   .hero__location { position: absolute; bottom: 12px; right: var(--gutter); display: flex; gap: 16px; align-items: center; font: 600 12px/1 var(--font-display); letter-spacing: .1em; }
   .hero__location > span { font-size: 20px; }
@@ -225,9 +229,6 @@
     .instagram-link:hover > svg { transform: translate(4px, -4px); }
     .footer-wordmark:hover { opacity: .8; }
   }
-  @media (min-width: 1800px) {
-    .hero { max-height: 1100px; aspect-ratio: auto; height: calc(100svh - var(--header-height)); }
-  }
   @media (max-width: 1199px) {
     .menu-intro { gap: 32px; }
     .menu-intro__copy .lead { font-size: 22px; }
@@ -243,7 +244,7 @@
     .desktop-nav { display: none; }
     .menu-toggle { display: grid; }
     .site-header__inner { gap: 20px; }
-    .hero h1 { font-size: 90px; }
+    .hero h1 { font-size: clamp(48px, min(9vw, 10cqh), 90px); }
     .hero__copy p { font-size: 13px; }
     .menu-intro { grid-template-columns: 1fr 1fr; padding-bottom: 52px; }
     .menu-intro .display-heading { font-size: 88px; }
@@ -271,7 +272,7 @@
     .footer-bottom__links { margin-left: auto; }
   }
   @media (max-width: 767px) {
-    :root { --header-height: 72px; --gutter: 20px; --section-space: 64px; }
+    :root { --header-height: 72px; --gutter: 20px; --section-space: 64px; --hero-action-height: calc(var(--mobile-height) + env(safe-area-inset-bottom, 0px)); }
     body { padding-bottom: calc(var(--mobile-height) + env(safe-area-inset-bottom)); }
     .section-topline { padding-top: 14px; padding-bottom: 20px; gap: 16px; }
     .section-topline .eyebrow { font-size: 11px; }
@@ -283,13 +284,12 @@
     .site-header__controls { gap: 12px; }
     .language-switch { font-size: 10px; gap: 8px; }
     .menu-toggle { width: 40px; height: 40px; padding: 8px; }
-    .hero { aspect-ratio: auto; min-height: max(590px, calc(100svh - var(--header-height) - var(--mobile-height) - env(safe-area-inset-bottom))); }
     .hero__art { inset: 35px 0 75px; }
-    .hero__copy { padding: 24px 20px 0; }
-    .hero h1 { font-size: clamp(68px, 18vw, 80px); line-height: .82; }
+    .hero__copy { padding: clamp(12px, 4cqh, 24px) 20px 0; }
+    .hero h1 { font-size: clamp(44px, min(18vw, 11cqh), 80px); line-height: .82; }
     .hero h1 > span { display: block; }
-    .hero__copy p { font-size: 12px; letter-spacing: .035em; margin-top: 14px; }
-    .hero__actions { bottom: 38px; gap: 8px; max-width: none; width: calc(100% - 40px); }
+    .hero__copy p { font-size: 12px; letter-spacing: .035em; margin-top: clamp(6px, 2cqh, 14px); }
+    .hero__actions { bottom: clamp(24px, 5cqh, 38px); gap: 8px; max-width: none; width: calc(100% - 40px); }
     .hero__actions .button { min-width: 0; flex: 1 1 0; gap: 12px; font-size: 12px; padding: 14px 10px; min-height: 52px; }
     .hero__actions .button svg { width: 17px; height: 17px; }
     .hero__location { font-size: 10px; gap: 8px; bottom: 10px; }
@@ -373,7 +373,7 @@
     .mobile-actions__label { font-size: 12px; font-weight: 700; }
   }
   @media (min-width: 481px) and (max-width: 767px) {
-    .hero h1 { font-size: clamp(64px, 12vw, 88px); }
+    .hero h1 { font-size: clamp(44px, min(12vw, 14cqh), 88px); }
     .hero h1 > span { display: inline; }
   }
   @media (max-width: 374px) {
@@ -386,6 +386,18 @@
     .mobile-actions > a { gap: 8px; padding-inline: 8px; }
     .mobile-actions__label { font-size: 11px; }
     .store-details > div { grid-template-columns: 72px minmax(0, 1fr); }
+  }
+  /* Compact the poster as well as its frame on short and landscape screens. */
+  @media (max-height: 600px) {
+    .hero__copy { padding: 12px 20px 0; }
+    .hero h1 { font-size: clamp(32px, min(9vw, 12cqh), 64px); }
+    .hero h1 > span { display: inline; }
+    .hero__copy p { font-size: 11px; margin-top: 6px; }
+    .hero__art { inset: 48px 0 60px; }
+    .hero__actions { bottom: 20px; }
+    .hero__actions .button { min-height: 44px; padding: 10px 14px; font-size: 12px; gap: 12px; }
+    .hero__location { bottom: 5px; font-size: 9px; }
+    .hero__location > span { font-size: 14px; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
